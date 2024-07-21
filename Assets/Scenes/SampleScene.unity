@@ -791,7 +791,7 @@ MonoBehaviour:
   Waypoints:
   - {fileID: 630699355}
   - {fileID: 475951285}
-  speed: 0
+  speed: 1
 --- !u!54 &814004411
 Rigidbody:
   m_ObjectHideFlags: 0
