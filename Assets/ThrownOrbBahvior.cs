@@ -17,9 +17,9 @@ public class ThrownOrbBahvior : MonoBehaviour
         if (!collision.gameObject.CompareTag("Player") || !collision.gameObject.CompareTag("OrbRadius")) {
             impactPoint = transform.position;
 
-            orbManager.orbs[orbManager.spawnedOrbRadiusIndex].transform.position = impactPoint;
-            orbManager.spawnedOrbRadiusIndex = (orbManager.spawnedOrbRadiusIndex + 1) % orbManager.orbs.Count;
-            Debug.Log($"Spawning Orb Radius {orbManager.spawnedOrbRadiusIndex} at location: {transform.position}");
+            orbManager.redOrbs[orbManager.redSpawnedOrbRadiusIndex].transform.position = impactPoint;
+            orbManager.redSpawnedOrbRadiusIndex = (orbManager.redSpawnedOrbRadiusIndex + 1) % orbManager.redOrbs.Count;
+            Debug.Log($"Spawning Orb Radius {orbManager.redSpawnedOrbRadiusIndex} at location: {transform.position}");
             transform.position = orbManager.transform.position;
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
         }

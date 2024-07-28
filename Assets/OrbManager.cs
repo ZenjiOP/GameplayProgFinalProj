@@ -5,23 +5,44 @@ using UnityEngine;
 
 public class OrbManager : MonoBehaviour
 {
-    public GameObject orb;
-    public List<GameObject> orbs = new List<GameObject>();
-    public int spawnedOrbRadiusIndex = 0;
+    public GameObject redOrb;
+    public GameObject blueOrb;
+    public List<GameObject> redOrbs = new List<GameObject>();
+    public List<GameObject> blueOrbs = new List<GameObject>();
+    public int redSpawnedOrbRadiusIndex = 0;
+    public int blueSpawnedOrbRadiusIndex = 0;
 
-    public GameObject thrownOrb;
-    public List<GameObject> thrownOrbs = new List<GameObject>();
-    public int thrownOrbIndex = 0;
-    
+    public GameObject redThrownOrb;
+    public List<GameObject> redThrownOrbs = new List<GameObject>();
+    public GameObject blueThrownOrb;
+    public List<GameObject> blueThrownOrbs = new List<GameObject>();
+
+    public int redThrownOrbIndex = 0;
+    public int blueThrownOrbIndex = 0;
+
     // Start is called before the first frame update
     void Awake()
     {
-        for (int i = 0; i < 6; i++) {
-            thrownOrbs.Add(Instantiate(thrownOrb, transform.position, Quaternion.identity));
-            thrownOrbs[i].GetComponent<ThrownOrbBahvior>().orbManager = this;
+        for (int i = 0; i < 3; i++) {
+            redThrownOrbs.Add(Instantiate(redThrownOrb, transform.position, Quaternion.identity));
+            redThrownOrbs[i].GetComponent<ThrownOrbBahvior>().orbManager = this;
+            blueThrownOrbs.Add(Instantiate(blueThrownOrb, transform.position, Quaternion.identity));
+            blueThrownOrbs[i].GetComponent<ThrownOrbBahvior>().orbManager = this;
         }
-        for (int i = 0; i < 6; i++) {
-            orbs.Add(Instantiate(orb, transform.position, Quaternion.identity));
+        for (int i = 0; i < 3; i++) {
+            redOrbs.Add(Instantiate(redOrb, transform.position, Quaternion.identity));
+            blueOrbs.Add(Instantiate(blueOrb, transform.position, Quaternion.identity));
         }
+    }
+
+    public void ResetOrbs() {
+        foreach (GameObject orb in redOrbs) {
+            orb.transform.position = this.transform.position;
+        }
+        foreach (GameObject orb in blueOrbs) {
+            orb.transform.position = this.transform.position;
+        }
+        redThrownOrbIndex = 0;
+        blueThrownOrbIndex = 0;
     }
 }

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - OrbRadius
   - Platform
+  - PlatformTrigger
+  - RedThrownOrb
+  - BlueThrownOrb
   layers:
   - Default
   - TransparentFX
@@ -15,9 +18,9 @@ TagManager:
   - UI
   - Player
   - OrbRadius
-  - 
-  - 
-  - 
+  - Platforms
+  - PlayerNoPlatforms
+  - Orbs
   - 
   - 
   - 

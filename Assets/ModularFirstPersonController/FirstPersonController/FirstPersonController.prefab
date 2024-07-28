@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4459864850019384737}
   - component: {fileID: 4459864850019384741}
   - component: {fileID: 4459864850019384740}
-  - component: {fileID: 7852932083012099847}
   m_Layer: 0
   m_Name: FirstPersonController
   m_TagString: Player
@@ -151,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwingPoint: {fileID: 8199473356701393378}
-  orbToThrow: {fileID: 3078369764482700600, guid: 34d0d071905b5a04bba4c4fb7f36b346, type: 3}
+  orbManagerObj: {fileID: 0}
   throwingStrength: 15
   playerCamera: {fileID: 4459864851310106426}
   fov: 90
@@ -197,19 +196,6 @@ MonoBehaviour:
   joint: {fileID: 4459864851508666808}
   bobSpeed: 10
   bobAmount: {x: 0, y: 0.1, z: 0}
---- !u!114 &7852932083012099847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4459864850019384750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ac52106537314c438940e53229ff0e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  box: {fileID: 0}
 --- !u!1 &4459864850190357393
 GameObject:
   m_ObjectHideFlags: 0

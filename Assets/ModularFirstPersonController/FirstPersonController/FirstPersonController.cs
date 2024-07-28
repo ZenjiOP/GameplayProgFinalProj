@@ -17,6 +17,10 @@ public class FirstPersonController : MonoBehaviour
     public GameObject orbManagerObj;
     private OrbManager orbManager;
     public float throwingStrength;
+
+    public float cooldownDuration = 1.0f;
+    public bool throwCooldown = false;
+    private bool parrentedOrb = false;
     #endregion 
 
     #region Camera Movement Variables
@@ -367,13 +371,41 @@ public class FirstPersonController : MonoBehaviour
         }
 
         #region Throw
+        //changes:
+
+        //thrownOrbIndex cannot > 7, if it's 7 throwing does nothing
+        //before an orb is thrown, parrent it to the throwpoint and set it's position relative to it to 0,0,0
+        //when thrown, unparrent and add force + kinematic
+
+        //press R to return all orbs
+        if (!parrentedOrb && orbManager.redThrownOrbIndex < 3) {
+            orbManager.redThrownOrbs[orbManager.redThrownOrbIndex].transform.SetParent(throwingPoint.transform);
+            orbManager.redThrownOrbs[orbManager.redThrownOrbIndex].transform.localPosition = Vector3.zero;
+            parrentedOrb = true;
+        }
+
+
         if (Input.GetKeyDown(KeyCode.E)) {
-            GameObject spawnedOrb = orbManager.thrownOrbs[orbManager.thrownOrbIndex];
-            spawnedOrb.transform.position = throwingPoint.transform.position;
-            spawnedOrb.transform.rotation = throwingPoint.transform.rotation;
-            spawnedOrb.GetComponent<Rigidbody>().isKinematic = false;
-            spawnedOrb.GetComponent<Rigidbody>().AddForce(spawnedOrb.transform.forward * throwingStrength, ForceMode.Impulse);
-            orbManager.thrownOrbIndex = (orbManager.thrownOrbIndex + 1) % orbManager.thrownOrbs.Count;
+            if (!throwCooldown) {
+                GameObject primedOrb;
+
+                if (orbManager.redThrownOrbIndex < 3) {
+                    primedOrb = orbManager.redThrownOrbs[orbManager.redThrownOrbIndex];
+                    primedOrb.transform.SetParent(null);
+
+                    primedOrb.transform.position = throwingPoint.transform.position;
+                    primedOrb.transform.rotation = throwingPoint.transform.rotation;
+                    primedOrb.GetComponent<Rigidbody>().isKinematic = false;
+                    primedOrb.GetComponent<Rigidbody>().AddForce(primedOrb.transform.forward * throwingStrength, ForceMode.Impulse);
+                    orbManager.redThrownOrbIndex++;
+
+                    StartCoroutine(ThrowCooldown());
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.R)) {
+            orbManager.ResetOrbs();
         }
 
         #endregion
@@ -540,6 +572,18 @@ public class FirstPersonController : MonoBehaviour
             timer = 0;
             joint.localPosition = new Vector3(Mathf.Lerp(joint.localPosition.x, jointOriginalPos.x, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.localPosition.y, jointOriginalPos.y, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.localPosition.z, jointOriginalPos.z, Time.deltaTime * bobSpeed));
         }
+    }
+
+    IEnumerator ThrowCooldown() {
+        throwCooldown = true;
+        Debug.Log("Cooldown started");
+
+        // Wait for the cooldown duration
+        yield return new WaitForSeconds(cooldownDuration);
+
+        throwCooldown = false;
+        parrentedOrb = false;
+        Debug.Log("Cooldown ended");
     }
 }
 

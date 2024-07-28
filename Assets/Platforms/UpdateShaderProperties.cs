@@ -4,15 +4,24 @@ using UnityEngine.Rendering.RendererUtils;
 
 public class UpdateShaderProperties : MonoBehaviour {
     public GameObject orbManager;
-    public GameObject[] orbArray = new GameObject[6]; // Assign the sphere object in the Inspector
-    public Vector4[] orbV4 = new Vector4[6];
+    public bool redPlatform;
+
+    public GameObject[] orbArray = new GameObject[3]; // Assign the sphere object in the Inspector
+    public Vector4[] orbV4 = new Vector4[3];
 
     private Renderer rend;
     private Material material;
 
     private void Start() {
-        for (int i = 0; i < 6; i++) {
-            orbArray[i] = orbManager.GetComponent<OrbManager>().orbs[i];
+        if (redPlatform) {
+            for (int i = 0; i < 3; i++) {
+                orbArray[i] = orbManager.GetComponent<OrbManager>().redOrbs[i];
+            }
+        }
+        if (!redPlatform) {
+            for (int i = 0; i < 3; i++) {
+                orbArray[i] = orbManager.GetComponent<OrbManager>().blueOrbs[i];
+            }
         }
         rend = GetComponent<Renderer>();
         material = rend.material;

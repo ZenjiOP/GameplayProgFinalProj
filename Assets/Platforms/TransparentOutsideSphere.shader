@@ -22,7 +22,7 @@ Shader "Custom/SemiTransparentRedOutsideSphere"
                 float3 worldPos : TEXCOORD0;
             };
 
-            float4 _SphereCenters[6];
+            float4 _SphereCenters[3];
             float _SphereRadius;
 
             v2f vert (appdata v)
@@ -37,7 +37,7 @@ Shader "Custom/SemiTransparentRedOutsideSphere"
             {
                 float alpha = 0.0; // Initialize alpha outside of the loop
                 
-                for (int j = 0; j < 6; j++) {
+                for (int j = 0; j < 3; j++) {
                     
                     float3 sphereCenter = _SphereCenters[j];
                     float sphereRadius = _SphereCenters[j].w;
@@ -46,8 +46,8 @@ Shader "Custom/SemiTransparentRedOutsideSphere"
                     alpha += smoothstep(sphereRadius, sphereRadius + 0.3, distToSphere);                   
                 }
                 
-                alpha = 1.0 - (alpha / 6); // Average alpha value for all spheres
-                alpha = alpha * 6;
+                alpha = 1.0 - (alpha / 3); // Average alpha value for all spheres
+                alpha = alpha * 3;
                 alpha = min(alpha, 0.5);
                 // Set output color based on the calculated alpha value
                 return half4(1.0, 0.0, 0.0, alpha);
