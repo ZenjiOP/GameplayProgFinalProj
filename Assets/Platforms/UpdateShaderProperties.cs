@@ -13,16 +13,16 @@ public class UpdateShaderProperties : MonoBehaviour {
     private Material material;
 
     private void Start() {
-        if (redPlatform) {
+        //if (redPlatform) {
             for (int i = 0; i < 3; i++) {
                 orbArray[i] = orbManager.GetComponent<OrbManager>().redOrbs[i];
             }
-        }
-        if (!redPlatform) {
+        //}
+        /*if (!redPlatform) {
             for (int i = 0; i < 3; i++) {
                 orbArray[i] = orbManager.GetComponent<OrbManager>().blueOrbs[i];
             }
-        }
+        }*/
         rend = GetComponent<Renderer>();
         material = rend.material;
     }

@@ -12,8 +12,10 @@ public class PlatformMovement : MonoBehaviour
     int currentWaypoint = 0;
 
     private void Start() {
-        foreach (GameObject waypoint in Waypoints) {
-            WaypointTransforms.Add(waypoint.transform);
+        if (Waypoints.Count > 0) {
+            foreach (GameObject waypoint in Waypoints) {
+                WaypointTransforms.Add(waypoint.transform);
+            }
         }
     }
 

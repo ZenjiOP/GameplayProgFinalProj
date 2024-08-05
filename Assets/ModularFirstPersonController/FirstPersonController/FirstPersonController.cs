@@ -286,7 +286,7 @@ public class FirstPersonController : MonoBehaviour
             if(isSprinting)
             {
                 isZoomed = false;
-                playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, sprintFOV, sprintFOVStepTime * Time.deltaTime);
+                //playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, sprintFOV, sprintFOVStepTime * Time.deltaTime);
 
                 // Drain sprint remaining while sprinting
                 if(!unlimitedSprint)
@@ -387,6 +387,7 @@ public class FirstPersonController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E)) {
             if (!throwCooldown) {
+                StartCoroutine(ThrowCooldown());
                 GameObject primedOrb;
 
                 if (orbManager.redThrownOrbIndex < 3) {
@@ -399,7 +400,6 @@ public class FirstPersonController : MonoBehaviour
                     primedOrb.GetComponent<Rigidbody>().AddForce(primedOrb.transform.forward * throwingStrength, ForceMode.Impulse);
                     orbManager.redThrownOrbIndex++;
 
-                    StartCoroutine(ThrowCooldown());
                 }
             }
         }
