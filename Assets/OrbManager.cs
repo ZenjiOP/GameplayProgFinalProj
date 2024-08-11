@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -19,6 +20,15 @@ public class OrbManager : MonoBehaviour
 
     public int redThrownOrbIndex = 0;
     public int blueThrownOrbIndex = 0;
+
+    public TMP_Text ui_text;
+
+    private void Update() {
+        if (redThrownOrbIndex == 3)
+            ui_text.text = "Press R to Recall Orbs";
+        else
+            ui_text.text = "";
+    }
 
     // Start is called before the first frame update
     void Awake()

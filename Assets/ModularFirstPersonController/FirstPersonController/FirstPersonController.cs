@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.VisualScripting;
+
 
 #if UNITY_EDITOR
-    using UnityEditor;
+using UnityEditor;
     using System.Net;
 #endif
 
@@ -63,6 +65,10 @@ public class FirstPersonController : MonoBehaviour
     public bool playerCanMove = true;
     public float walkSpeed = 5f;
     public float maxVelocityChange = 10f;
+    public bool touchingPlatform = false;
+
+    public Transform platformTouching;
+    private Vector3 platformLastPosition;
 
     // Internal Variables
     private bool isWalking = false;
@@ -414,6 +420,11 @@ public class FirstPersonController : MonoBehaviour
     void FixedUpdate()
     {
         #region Movement
+        if (touchingPlatform) {
+            Vector3 platformMovement = platformTouching.position - platformLastPosition;
+            transform.position += platformMovement;
+            platformLastPosition = platformTouching.position;
+        }
 
         if (playerCanMove)
         {
@@ -486,6 +497,21 @@ public class FirstPersonController : MonoBehaviour
         }
 
         #endregion
+    }
+
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.CompareTag("Platform")) {
+            touchingPlatform = true;
+            platformTouching = collision.gameObject.transform;
+            platformLastPosition = platformTouching.position;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision) {
+        if (collision.gameObject.CompareTag("Platform")) {
+            touchingPlatform = false;
+            platformTouching = null;
+        }
     }
 
     // Sets isGrounded based on a raycast sent straigth down from the player object
